@@ -29,7 +29,7 @@ logout();   // sign-out from firebase and resets user object
 // this hook works just like useState, but using realtime database :)
 // reference is a firebase realtime db ref (or path)
 // defaultVal is optional, null is returned when ref is loading or not exist
-const [currentVal, setCurrentVal] = useState(reference, defaultVal);
+const [currentVal, setCurrentVal] = useReference(reference, defaultVal);
 ```
 
 Feel free to adapt or create new Hooks, e.g. for other authentication strategies.
