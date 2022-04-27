@@ -1,36 +1,36 @@
 import { View, Text, StyleSheet, Button } from "react-native";
-import React, { useContext } from "react";
+import React from "react";
 
 import useReference from "../hooks/useReference";
 import useAuth from "../hooks/useAuth";
 
 export default function Home() {
   const { user, login, logout } = useAuth();
+  const [myRef, setMyRef] = useReference(
+    "myref/1",
+    "optional default val (loading..)"
+  );
 
-  const handleSignIn = () => {
+  const handleLogin = () => {
     login("user@example.com", "123456");
   };
 
-  const handleSignOut = () => {
+  const handleLogout = () => {
     logout();
   };
 
-  const handleSet = () => {
-    setPump("new nva " + Math.random());
+  const handleUpdate = () => {
+    setMyRef("RandVal: " + Math.random());
   };
-
-  const [pump, setPump] = useReference("pump/1");
 
   return (
     <View style={styles.container}>
-      <Text>Pump: {pump}</Text>
+      <Text>Ref: {myRef}</Text>
+      <Text>User: {user?.email}</Text>
 
-      <Text>{JSON.stringify(user?.email)}</Text>
-
-      <Button title="login" onPress={handleSignIn} />
-      <Button title="logout" onPress={handleSignOut} />
-
-      <Button title="set" onPress={handleSet} />
+      <Button title="login" onPress={handleLogin} />
+      <Button title="logout" onPress={handleLogout} />
+      <Button title="Update Ref (Realtime)" onPress={handleUpdate} />
     </View>
   );
 }
