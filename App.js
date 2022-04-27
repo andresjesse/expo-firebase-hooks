@@ -41,6 +41,8 @@ export default function App() {
 
   // if (!user) return <Text>Logging in..</Text>;
 
+  const firebaseContext = useContext(FirebaseContext);
+
   return (
     <FirebaseWrapper firebaseConfig={firebaseConfig}>
       <Home />

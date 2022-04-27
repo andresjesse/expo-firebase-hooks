@@ -1,13 +1,21 @@
-const write = (reference, value) => {
-  const databaseReference = ref(getDatabase(), reference);
-  return set(databaseReference, value);
-};
+import { getDatabase, onValue, ref, set } from "firebase/database";
+import { useState, useEffect } from "react";
 
-const read = (reference) => {
-  const databaseReference = ref(getDatabase(), reference);
+export default function useReference(reference) {
+  const [currentVal, setCurrentVal] = useState(null);
 
-  onValue(reference, (snapshot) => {
-    const { highscore } = snapshot.val();
-    console.log(snapshot.val());
-  });
-};
+  const updateReference = (newVal) => {
+    const databaseReference = ref(getDatabase(), reference);
+    set(databaseReference, newVal);
+  };
+
+  useEffect(() => {
+    const databaseReference = ref(getDatabase(), reference);
+
+    onValue(databaseReference, (snapshot) => {
+      setCurrentVal(snapshot.val());
+    });
+  }, []);
+
+  return [currentVal, updateReference];
+}

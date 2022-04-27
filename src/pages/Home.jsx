@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import React, { useContext } from "react";
 
 import { FirebaseContext } from "../components/FirebaseWrapper";
+import useReference from "../hooks/useReference";
 
 export default function Home() {
   const firebaseContext = useContext(FirebaseContext);
@@ -15,9 +16,11 @@ export default function Home() {
   };
 
   const handleSet = () => {
-    firebaseContext
-      .write("users/2", "test string")
-      .then(() => console.log("write ok!"));
+    // firebaseContext
+    //   .write("users/2", "test string")
+    //   .then(() => console.log("write ok!"));
+
+    setPump("new nva");
   };
 
   const handleGet = () => {
@@ -29,9 +32,11 @@ export default function Home() {
     // });
   };
 
+  const [pump, setPump] = useReference("pump/1");
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Pump: {pump}</Text>
 
       <Text>{JSON.stringify(firebaseContext?.user?.email)}</Text>
 
