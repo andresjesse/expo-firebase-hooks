@@ -1,22 +1,35 @@
 import { View, Text, StyleSheet, Button } from "react-native";
 import React, { useContext } from "react";
 
+import { FirebaseContext } from "../components/FirebaseWrapper";
 import useReference from "../hooks/useReference";
-import useAuth from "../hooks/useAuth";
 
 export default function Home() {
-  const { user, login, logout } = useAuth();
+  const firebaseContext = useContext(FirebaseContext);
 
   const handleSignIn = () => {
-    login("user@example.com", "123456");
+    firebaseContext.login("user@example.com", "123456");
   };
 
   const handleSignOut = () => {
-    logout();
+    firebaseContext.logout();
   };
 
   const handleSet = () => {
-    setPump("new nva " + Math.random());
+    // firebaseContext
+    //   .write("users/2", "test string")
+    //   .then(() => console.log("write ok!"));
+
+    setPump("new nva");
+  };
+
+  const handleGet = () => {
+    // const db = getDatabase();
+    // const reference = ref(db, "users/" + 1);
+    // onValue(reference, (snapshot) => {
+    //   const { highscore } = snapshot.val();
+    //   console.log(snapshot.val());
+    // });
   };
 
   const [pump, setPump] = useReference("pump/1");
@@ -25,12 +38,13 @@ export default function Home() {
     <View style={styles.container}>
       <Text>Pump: {pump}</Text>
 
-      <Text>{JSON.stringify(user?.email)}</Text>
+      <Text>{JSON.stringify(firebaseContext?.user?.email)}</Text>
 
       <Button title="login" onPress={handleSignIn} />
       <Button title="logout" onPress={handleSignOut} />
 
       <Button title="set" onPress={handleSet} />
+      <Button title="get" onPress={handleGet} />
     </View>
   );
 }

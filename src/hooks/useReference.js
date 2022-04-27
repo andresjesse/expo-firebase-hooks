@@ -1,5 +1,6 @@
 import { getDatabase, onValue, ref, set } from "firebase/database";
 import { useState, useEffect } from "react";
+import useAuth from "./useAuth";
 
 export default function useReference(reference) {
   const [currentVal, setCurrentVal] = useState(null);
@@ -9,13 +10,17 @@ export default function useReference(reference) {
     set(databaseReference, newVal);
   };
 
+  const { user } = useAuth();
+
   useEffect(() => {
     const databaseReference = ref(getDatabase(), reference);
 
-    onValue(databaseReference, (snapshot) => {
+    unsubscribeCallback = onValue(databaseReference, (snapshot) => {
       setCurrentVal(snapshot.val());
     });
-  }, []);
+
+    return unsubscribeCallback;
+  }, [user]);
 
   return [currentVal, updateReference];
 }

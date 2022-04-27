@@ -8,6 +8,7 @@ import FirebaseWrapper, {
 import firebaseConfig from "./src/config/firebaseConfig";
 import { useContext } from "react";
 import Home from "./src/pages/Home";
+import useFirebase from "./src/hooks/useFirebase";
 
 // import { LogBox } from "react-native";
 // LogBox.ignoreLogs(["AsyncStorage has been extracted from react-native core"]);
@@ -41,11 +42,13 @@ export default function App() {
 
   // if (!user) return <Text>Logging in..</Text>;
 
-  const firebaseContext = useContext(FirebaseContext);
+  const firebaseApp = useFirebase(firebaseConfig);
+
+  if (!firebaseApp) return <Text>Loading...</Text>;
 
   return (
-    <FirebaseWrapper firebaseConfig={firebaseConfig}>
-      <Home />
-    </FirebaseWrapper>
+    // <FirebaseWrapper firebaseConfig={firebaseConfig}>
+    <Home />
+    // </FirebaseWrapper>
   );
 }
