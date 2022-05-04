@@ -18,7 +18,7 @@ const firebaseApp = useFirebase(firebaseConfig);
 ```javascript
 const { user, login, logout } = useAuth();
 ...
-user    // firebase user when logged in (null/undefined otherwise)
+user    // is the firebase user object when logged in (null/undefined otherwise)
 login("user@example.com", "123456");    // using email/password strategy, automatically updates user object
 logout();   // sign-out from firebase and resets user object
 ```
@@ -30,6 +30,27 @@ logout();   // sign-out from firebase and resets user object
 // reference is a firebase realtime db ref (or path)
 // defaultVal is optional, null is returned when ref is loading or not exist
 const [currentVal, setCurrentVal] = useReference(reference, defaultVal);
+```
+
+**useList**:
+
+```javascript
+// this hook is a helper to manipulate lists of objects
+// by default, firebase lists are key-value objects {key1:obj1, key2:obj2, ...}
+// usage example:
+const books = useList("books");
+
+// to access list objects use the "data" attribute:
+books.data;
+
+// to create a new object use create. a hash key will be created automatically:
+books.create(object);
+
+// objects can be removed by key:
+books.remove(key);
+
+// objects can be updated by key an an updated value:
+books.update(key, updatedObject);
 ```
 
 Feel free to adapt or create new Hooks, e.g. for other authentication strategies.
