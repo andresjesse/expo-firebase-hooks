@@ -104,3 +104,17 @@ src/pages   -> a sample page using auth and realtime db
 ## Known Issues
 
 [For now] expo firebase library is outdated and some warnings are shown. I've disabled them in `src/hooks/useFirebase.js` with LogBox. I hope these dependencies to be updated soon.
+
+## Fix for firebase: 9.8.2 (add cjs module support)
+
+This repository was created with firebase 9.6.11, which works out of the box. Recent firebase (9.8.2), crashes on build due to cjs module not being recognized by metro bundler. To fix it, create a `metro.config.js` file in project's root and add the following content:
+
+```js
+const { getDefaultConfig } = require("@expo/metro-config");
+
+const defaultConfig = getDefaultConfig(__dirname);
+
+defaultConfig.resolver.assetExts.push("cjs");
+
+module.exports = defaultConfig;
+```
