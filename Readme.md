@@ -1,5 +1,7 @@
 # Expo and Firebase Integration Sample
 
+[DEPRECATED]: This repository is not mantained anymore. Check this one for updated hooks: https://github.com/andresjesse/simple-firestore-hooks
+
 This is a minimal example of using firebase web SDK with Expo apps. A react hook-based workflow is applied for firebase auth and realtime database.
 
 ## Custom Hooks Usage
